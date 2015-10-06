@@ -13,9 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-handlers = 1catalina.org.apache.juli.FileHandler, 2localhost.org.apache.juli.FileHandler, java.util.logging.ConsoleHandler
+handlers = 1catalina.java.util.logging.FileHandler, 2localhost.java.util.logging.FileHandler, java.util.logging.ConsoleHandler
 
-.handlers = 1catalina.org.apache.juli.FileHandler, java.util.logging.ConsoleHandler
+.handlers = 1catalina.java.util.logging.FileHandler, java.util.logging.ConsoleHandler
 
 .level = <%= node["tomcat"]["loglevel"] %>
 
@@ -24,13 +24,21 @@ handlers = 1catalina.org.apache.juli.FileHandler, 2localhost.org.apache.juli.Fil
 # Describes specific configuration info for Handlers.
 ############################################################
 
-1catalina.org.apache.juli.FileHandler.level = FINE
-1catalina.org.apache.juli.FileHandler.directory = ${catalina.base}/logs
-1catalina.org.apache.juli.FileHandler.prefix = catalina.
+1catalina.java.util.logging.FileHandler.level = FINE
+1catalina.java.util.logging.FileHandler.directory = ${catalina.base}/logs
+1catalina.java.util.logging.FileHandler.prefix = catalina.
+1catalina.java.util.logging.FileHandler.pattern=${catalina.base}/logs/catalina%g.log
+1catalina.java.util.logging.FileHandler.limit = 100000
+1catalina.java.util.logging.FileHandler.count = 10
+1catalina.java.util.logging.FileHandler.formatter = java.util.logging.SimpleFormatter
 
-2localhost.org.apache.juli.FileHandler.level = FINE
-2localhost.org.apache.juli.FileHandler.directory = ${catalina.base}/logs
-2localhost.org.apache.juli.FileHandler.prefix = localhost.
+2localhost.java.util.logging.FileHandler.level = FINE
+2localhost.java.util.logging.FileHandler.directory = ${catalina.base}/logs
+2localhost.java.util.logging.FileHandler.prefix = localhost.
+2localhost.java.util.logging.FileHandler.pattern=${catalina.base}/logs/catalina%g.log
+2localhost.java.util.logging.FileHandler.limit = 100000
+2localhost.java.util.logging.FileHandler.count = 10
+2localhost.java.util.logging.FileHandler.formatter = java.util.logging.SimpleFormatter
 
 java.util.logging.ConsoleHandler.level = FINE
 java.util.logging.ConsoleHandler.formatter = java.util.logging.SimpleFormatter
@@ -41,4 +49,4 @@ java.util.logging.ConsoleHandler.formatter = java.util.logging.SimpleFormatter
 ############################################################
 
 org.apache.catalina.core.ContainerBase.[Catalina].[localhost].level = INFO
-org.apache.catalina.core.ContainerBase.[Catalina].[localhost].handlers = 2localhost.org.apache.juli.FileHandler
+org.apache.catalina.core.ContainerBase.[Catalina].[localhost].handlers = 2localhost.java.util.logging.FileHandler
